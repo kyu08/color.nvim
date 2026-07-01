@@ -11,6 +11,7 @@ M.config = {
 	functionStyle = {},
 	keywordStyle = {},
 	statementStyle = { bold = true },
+	booleanStyle = {},
 	typeStyle = {},
 	transparent = false,
 	dimInactive = false,

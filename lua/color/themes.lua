@@ -127,8 +127,8 @@ return {
 				variable = "none", -- 既定 fg (Dark 2026 の plain ident)
 				number = palette.number, -- #79C0FF blue
 				constant = palette.constant, -- #79C0FF blue
-				identifier = "none", -- 既定 fg (Dark 2026 は変数を装飾しない)
-				parameter = palette.annotation, -- #FFA657 orange (Dark 2026 の param)
+				identifier = palette.identifier, -- 独立キー(例: dark2026=fg, darcula=紫)
+				parameter = palette.parameter, -- 独立キー(例: dark2026=橙, darcula=fg)
 				fun = palette.func, -- #D2A8FF purple
 				statement = palette.keyword, -- #FF7B72 red
 				keyword = palette.keyword, -- #FF7B72 red

@@ -19,7 +19,7 @@ function M.setup(colors, config)
 		--  Number		a number constant: 234, 0xff
 		Number = { fg = theme.syn.number },
 		--  Boolean	a boolean constant: TRUE, false
-		Boolean = { fg = theme.syn.constant },
+		Boolean = vim.tbl_extend("force", { fg = theme.syn.constant }, config.booleanStyle or {}),
 		--  Float		a floating point constant: 2.3e10
 		Float = { link = "Number" },
 

@@ -185,22 +185,24 @@ function M.setup(colors, config)
 		CmpItemKindTypeParameter = { link = "Type" },
 		CmpItemKindCopilot = { link = "String" },
 
-		-- blink.cmp (IntelliJ-style popup)
-		BlinkCmpMenu = { fg = theme.ui.fg, bg = theme.ui.bg_p1 },
+		-- blink.cmp (popup)
+		-- 背景は float.bg に統一(Pmenu と揃い、VS Code の suggest widget 相当)。
+		-- これで選択(bg_sel)・スクロールバーthumb(bg_p2)がメニュー背景と衝突せず見える。
+		BlinkCmpMenu = { fg = theme.ui.fg, bg = theme.ui.float.bg },
 		BlinkCmpMenuSelection = { fg = "none", bg = theme.ui.pmenu.bg_sel },
-		BlinkCmpMenuBorder = { fg = theme.ui.bg_p2, bg = theme.ui.bg_p1 },
+		BlinkCmpMenuBorder = { fg = theme.ui.bg_p2, bg = theme.ui.float.bg },
 		BlinkCmpScrollBarThumb = { bg = theme.ui.bg_p2 },
-		BlinkCmpScrollBarGutter = { bg = theme.ui.bg_p1 },
+		BlinkCmpScrollBarGutter = { bg = theme.ui.float.bg },
 		BlinkCmpLabel = { fg = theme.ui.fg },
 		BlinkCmpLabelMatch = { fg = theme.ui.fg, bold = true },
 		BlinkCmpLabelDetails = { fg = theme.ui.fg_dim },
 		BlinkCmpLabelDeprecated = { fg = theme.ui.fg_dim, strikethrough = true },
 		BlinkCmpGhostText = { fg = theme.ui.fg_dim },
-		BlinkCmpDoc = { fg = theme.ui.fg, bg = theme.ui.bg_p1 },
-		BlinkCmpDocBorder = { fg = theme.ui.bg_p2, bg = theme.ui.bg_p1 },
+		BlinkCmpDoc = { fg = theme.ui.fg, bg = theme.ui.float.bg },
+		BlinkCmpDocBorder = { fg = theme.ui.bg_p2, bg = theme.ui.float.bg },
 		BlinkCmpDocCursorLine = { bg = theme.ui.bg_p2 },
-		BlinkCmpSignatureHelp = { fg = theme.ui.fg, bg = theme.ui.bg_p1 },
-		BlinkCmpSignatureHelpBorder = { fg = theme.ui.bg_p2, bg = theme.ui.bg_p1 },
+		BlinkCmpSignatureHelp = { fg = theme.ui.fg, bg = theme.ui.float.bg },
+		BlinkCmpSignatureHelpBorder = { fg = theme.ui.bg_p2, bg = theme.ui.float.bg },
 		BlinkCmpSignatureHelpActiveParameter = { fg = theme.syn.fun, bold = true },
 
 		-- IntelliJ-style completion kind colors

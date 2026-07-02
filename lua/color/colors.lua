@@ -21,6 +21,8 @@ local REQUIRED_KEYS = {
 	"comment",
 	"func",
 	"constant",
+	"member",
+	"boolean",
 	"identifier",
 	"parameter",
 	"annotation",

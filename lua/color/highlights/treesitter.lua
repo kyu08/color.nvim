@@ -14,7 +14,7 @@ function M.setup(colors, config)
 		["@variable.parameter"] = { fg = theme.syn.parameter },
 		-- @variable.parameter.builtin     special parameters (e.g. `_`, `it`)
 		-- @variable.member                object and struct fields
-		["@variable.member"] = { fg = theme.syn.constant },
+		["@variable.member"] = { fg = theme.syn.member },
 		--
 		-- @constant (Constant)              constant identifiers
 		-- @constant.builtin       built-in constant values (e.g. `nil`, `iota` in Go)
@@ -52,7 +52,7 @@ function M.setup(colors, config)
 		["@attribute"] = { link = "Constant" },
 		-- @attribute.builtin      builtin annotations (e.g. `@property` in Python)
 		-- @property               the key in key/value pairs
-		["@property"] = { fg = theme.syn.constant },
+		["@property"] = { fg = theme.syn.member },
 		--
 		-- @function               function definitions
 		-- @function.builtin       built-in functions

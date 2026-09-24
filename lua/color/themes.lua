@@ -19,6 +19,13 @@
 ---@field special1 ColorSpec
 ---@field special2 ColorSpec
 ---@field special3 ColorSpec
+---@field conditional? ColorSpec
+---@field keyword_return ColorSpec
+---@field builtin_constant ColorSpec
+---@field builtin_variable ColorSpec
+---@field builtin_type? ColorSpec
+---@field module? ColorSpec
+---@field property? ColorSpec
 
 ---@class DiagnosticsElements
 ---@field error ColorSpec
@@ -50,6 +57,11 @@
 ---@field bg_p1 ColorSpec Lighter background ColorColumn, Folded, Gutter
 ---@field bg_p2 ColorSpec Lighter background Cursor{Line,Column}, TabLineSel (Selected Items)
 ---@field bg_gutter ColorSpec {Sign,Fold}Column, LineNr
+---@field bg_cursorline ColorSpec CursorLine
+---@field bg_sign ColorSpec SignColumn
+---@field line_nr ColorSpec LineNr
+---@field cursor_line_nr ColorSpec CursorLineNr
+---@field inlay_hint? ColorSpec LspInlayHint
 ---@field special ColorSpec SpecialKey
 ---@field nontext ColorSpec LineNr, NonText
 ---@field whitespace ColorSpec Whitespace
@@ -100,6 +112,13 @@ return {
 				bg_p1 = palette.bg3,
 				bg_p2 = palette.bg5,
 
+				-- 以下は任意キー。未指定なら従来どおりの色になる。
+				bg_cursorline = palette.cursorLine or palette.bg5,
+				bg_sign = palette.signColumn or palette.bg2,
+				line_nr = palette.lineNr or palette.nontext,
+				cursor_line_nr = palette.cursorLineNr or palette.fg,
+				inlay_hint = palette.inlayHint,
+
 				special = palette.fgDark,
 				nontext = palette.nontext,
 				whitespace = palette.whitespace,
@@ -124,7 +143,7 @@ return {
 			},
 			syn = {
 				string = palette.string, -- #A5D6FF light blue
-				variable = "none", -- 既定 fg (Dark 2026 の plain ident)
+				variable = palette.variable or palette.fg, -- 任意キー。既定は fg (Dark 2026 の plain ident)
 				number = palette.number, -- #79C0FF blue
 				constant = palette.constant, -- #79C0FF blue
 				member = palette.member, -- 独立キー: フィールド/プロパティ(例: tokyonight=青, darcula=紫)
@@ -145,6 +164,17 @@ return {
 				special1 = palette.annotation, -- #FFA657 orange (attribute/special)
 				special2 = palette.keyword, -- #FF7B72 red (builtin vars)
 				special3 = palette.preproc, -- #FF7B72 red (return, throw)
+
+				-- 以下は任意キー。未指定なら従来どおりの色(または Neovim 既定のリンク)になる。
+				-- 移植元のテーマがグループの割り当て自体を変えている箇所を表現するために使う
+				-- (例: vscode は変数=水色・if=ピンク、gruvbox は return=赤・import=水色)。
+				conditional = palette.conditional, -- nil なら @keyword にフォールバック
+				keyword_return = palette.keywordReturn or palette.preproc, -- return / throw
+				builtin_constant = palette.builtinConstant or palette.constant, -- nil, true など
+				builtin_variable = palette.builtinVariable or palette.keyword, -- this, self
+				builtin_type = palette.builtinType, -- nil なら Special にフォールバック
+				module = palette.module, -- nil なら Structure にフォールバック
+				property = palette.property, -- LSP の property トークン。nil なら Constant
 			},
 			vcs = {
 				added = palette.vcsAdded,

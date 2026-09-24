@@ -7,9 +7,13 @@ function M.setup(colors, config)
 	local theme = colors.theme
 	return {
 		-- @variable                       various variable names
-		["@variable"] = { fg = theme.ui.fg },
+		["@variable"] = { fg = theme.syn.variable },
 		-- @variable.builtin (Special)     built-in variable names (e.g. `this`, `self`)
-		["@variable.builtin"] = { fg = theme.syn.special2, italic = true },
+		["@variable.builtin"] = vim.tbl_extend(
+			"force",
+			{ fg = theme.syn.builtin_variable },
+			config.builtinVariableStyle
+		),
 		-- @variable.parameter             parameters of a function
 		["@variable.parameter"] = { fg = theme.syn.parameter },
 		-- @variable.parameter.builtin     special parameters (e.g. `_`, `it`)
@@ -18,10 +22,11 @@ function M.setup(colors, config)
 		--
 		-- @constant (Constant)              constant identifiers
 		-- @constant.builtin       built-in constant values (e.g. `nil`, `iota` in Go)
-		["@constant.builtin"] = { fg = theme.syn.constant },
+		["@constant.builtin"] = { fg = theme.syn.builtin_constant },
 		-- @constant.macro         constants defined by the preprocessor
 		--
 		-- @module (Structure)      modules or namespaces
+		["@module"] = theme.syn.module and { fg = theme.syn.module } or nil,
 		-- @module.builtin         built-in modules or namespaces
 		-- @label                  `GOTO` and other labels (e.g. `label:` in C), including heredoc labels
 		--
@@ -46,6 +51,7 @@ function M.setup(colors, config)
 		--
 		-- @type                   type or class definitions and annotations
 		-- @type.builtin           built-in types
+		["@type.builtin"] = theme.syn.builtin_type and { fg = theme.syn.builtin_type } or nil,
 		-- @type.definition        identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
 		--
 		-- @attribute              attribute annotations (e.g. Python decorators, Rust lifetimes)
@@ -78,15 +84,21 @@ function M.setup(colors, config)
 		-- @keyword.type           keywords defining composite types (e.g. `struct`, `enum`)
 		-- @keyword.modifier       keywords defining type modifiers (e.g. `const`, `static`, `public`)
 		-- @keyword.repeat         keywords related to loops (e.g. `for`, `while`)
+		["@keyword.repeat"] = theme.syn.conditional
+				and vim.tbl_extend("force", { fg = theme.syn.conditional }, config.keywordStyle)
+			or nil,
 		-- @keyword.return         keywords like `return` and `yield`
-		["@keyword.return"] = vim.tbl_extend("force", { fg = theme.syn.special3 }, config.keywordStyle),
+		["@keyword.return"] = vim.tbl_extend("force", { fg = theme.syn.keyword_return }, config.keywordStyle),
 		-- @keyword.debug          keywords related to debugging
 		-- @keyword.exception      keywords related to exceptions (e.g. `throw`, `catch`)
-		["@keyword.exception"] = vim.tbl_extend("force", { fg = theme.syn.special3 }, config.statementStyle),
+		["@keyword.exception"] = vim.tbl_extend("force", { fg = theme.syn.keyword_return }, config.statementStyle),
 
 		["@keyword.luap"] = { link = "@string.regex" },
 		--
 		-- @keyword.conditional         keywords related to conditionals (e.g. `if`, `else`)
+		["@keyword.conditional"] = theme.syn.conditional
+				and vim.tbl_extend("force", { fg = theme.syn.conditional }, config.keywordStyle)
+			or nil,
 		-- @keyword.conditional.ternary ternary operator (e.g. `?`, `:`)
 		--
 		-- @keyword.directive           various preprocessor directives and shebangs

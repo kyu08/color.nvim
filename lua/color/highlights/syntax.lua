@@ -13,7 +13,7 @@ function M.setup(colors, config)
 		-- *Constant	any constant
 		Constant = { fg = theme.syn.constant },
 		--  String		a string constant: "this is a string"
-		String = { fg = theme.syn.string },
+		String = vim.tbl_extend("force", { fg = theme.syn.string }, config.stringStyle),
 		--  Character	a character constant: 'c', '\n'
 		Character = { link = "String" },
 		--  Number		a number constant: 234, 0xff

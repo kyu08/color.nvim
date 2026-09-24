@@ -13,6 +13,14 @@ M.config = {
 	statementStyle = { bold = true },
 	booleanStyle = {},
 	typeStyle = {},
+	stringStyle = {},
+	builtinVariableStyle = { italic = true },
+	inlayHintStyle = {},
+	--- lualine の "color" テーマを差し替える(任意)。
+	--- 移植元テーマの lualine 配色を使いたい場合に lualine テーマのテーブルを渡す。
+	--- lualine 側のテーマを使う場合は読み込み順を気にしなくて済むよう関数で渡せる。
+	---@type table|fun(): table|nil
+	lualineTheme = nil,
 	transparent = false,
 	dimInactive = false,
 	terminalColors = true,
@@ -22,10 +30,20 @@ M.config = {
 	end,
 }
 
+local default_config = vim.deepcopy(M.config)
+
 --- スタイル設定を更新する。色(パレット)は load() に渡す。
+--- *Style と lualineTheme は深くマージせず丸ごと置き換える。
+--- (深くマージすると statementStyle = {} を渡しても既定の bold が消えないため)
 ---@param config? ColorConfig
 function M.setup(config)
-	M.config = vim.tbl_deep_extend("force", M.config, config or {})
+	config = config or {}
+	M.config = vim.tbl_deep_extend("force", M.config, config)
+	for key, value in pairs(config) do
+		if key:match("Style$") or key == "lualineTheme" then
+			M.config[key] = value
+		end
+	end
 end
 
 --- カラースキームを適用する。
@@ -37,6 +55,8 @@ function M.load(palette, config)
 		error("color.nvim: palette must be provided, e.g. require('color').load({ bg2 = '#121314', ... })")
 	end
 	if config then
+		-- 前回の load() の設定を持ち越さないよう、既定値から組み立て直す
+		M.config = vim.deepcopy(default_config)
 		M.setup(config)
 	end
 

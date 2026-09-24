@@ -3,6 +3,13 @@ local loaded = require("color")._colors
 if not loaded then
 	error("color.nvim: require('color').load({...}) must be called before using this lualine theme")
 end
+local override = require("color").config.lualineTheme
+if type(override) == "function" then
+	-- lualine 読み込み後に評価したいテーマ(require("lualine.themes.xxx") など)用
+	return override()
+elseif override then
+	return override
+end
 local theme = loaded.theme
 
 local color = {}

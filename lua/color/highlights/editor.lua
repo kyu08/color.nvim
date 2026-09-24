@@ -22,7 +22,7 @@ function M.setup(colors, config)
 		-- CursorColumn	Screen-column at the cursor, when 'cursorcolumn' is set.
 		CursorColumn = { link = "CursorLine" },
 		-- CursorLine	Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-		CursorLine = { bg = theme.ui.bg_p2 },
+		CursorLine = { bg = theme.ui.bg_cursorline },
 		-- Directory	Directory names (and other special names in listings).
 		Directory = { fg = theme.syn.fun },
 		-- DiffAdd		Diff mode: Added line. |diff.txt|
@@ -47,17 +47,17 @@ function M.setup(colors, config)
 		-- FoldColumn	'foldcolumn'
 		FoldColumn = { fg = theme.ui.nontext, bg = theme.ui.bg_gutter },
 		-- SignColumn	Column where |signs| are displayed.
-		SignColumn = { fg = theme.ui.special, bg = theme.ui.bg_gutter },
+		SignColumn = { fg = theme.ui.special, bg = theme.ui.bg_sign },
 		-- IncSearch	'incsearch' highlighting; also used for the text replaced with ":s///c".
 		IncSearch = { fg = theme.ui.fg_reverse, bg = theme.diag.warning },
 		-- Substitute	|:substitute| replacement text highlighting.
 		Substitute = { fg = theme.ui.fg, bg = theme.vcs.removed },
 		-- LineNr		Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
-		LineNr = { fg = theme.ui.nontext, bg = theme.ui.bg_gutter },
+		LineNr = { fg = theme.ui.line_nr, bg = theme.ui.bg_gutter },
 		-- LineNrAbove	Line number for when the 'relativenumber' option is set, above the cursor line.
 		-- LineNrBelow	Line number for when the 'relativenumber' option is set, below the cursor line.
 		-- CursorLineNr	Like LineNr when 'cursorline' is set and 'cursorlineopt' contains "number" or is "both", for the cursor line.
-		CursorLineNr = { fg = theme.ui.fg, bg = theme.ui.bg_gutter },
+		CursorLineNr = { fg = theme.ui.cursor_line_nr, bg = theme.ui.bg_gutter },
 		-- CursorLineFold	Like FoldColumn when 'cursorline' is set for the cursor line.
 		-- CursorLineSign	Like SignColumn when 'cursorline' is set for the cursor line.
 		-- MatchParen	Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
@@ -153,7 +153,10 @@ function M.setup(colors, config)
 		LspReferenceText = { bg = theme.diff.text },
 		LspReferenceRead = { link = "LspReferenceText" },
 		LspReferenceWrite = { bg = theme.diff.text, underline = true },
-		-- LspInlayHint = { link = "NonText"},
+		-- inlayHint / inlayHintStyle が未指定なら Neovim 既定の NonText リンクのままにする
+		LspInlayHint = (theme.ui.inlay_hint or next(config.inlayHintStyle))
+				and vim.tbl_extend("force", { fg = theme.ui.inlay_hint or theme.ui.nontext }, config.inlayHintStyle)
+			or { link = "NonText" },
 
 		DiagnosticError = { fg = theme.diag.error },
 		DiagnosticWarn = { fg = theme.diag.warning },

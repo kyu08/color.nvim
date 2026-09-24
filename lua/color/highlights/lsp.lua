@@ -15,7 +15,7 @@ function M.setup(colors, config)
         ["@lsp.type.method"] = { link = "@function.method" },       -- Function
         ["@lsp.type.namespace"] = { link = "@module" },             -- Structure
         ["@lsp.type.parameter"] = { link = "@variable.parameter" }, -- Identifier
-        ["@lsp.type.property"] = { link = "Constant" },
+        ["@lsp.type.property"] = theme.syn.property and { fg = theme.syn.property } or { link = "Constant" },
         -- ["@lsp.type.struct"] = { link = "Structure" },
         -- ["@lsp.type.type"] = { link = "Type" },
         -- ["@lsp.type.typeParameter"] = { link = "TypeDef" },
